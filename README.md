@@ -1,1 +1,10 @@
 # configmaps-secrets
+A ConfigMap and a Secret in Kubernetes are used to store data that your application needs, but outside of the application code. A ConfigMap stores normal configuration data like environment names, URLs, or app settings, while a Secret stores sensitive data like passwords, API keys, or tokens. Instead of writing these values directly inside your Pod or application code, you store them separately in Kubernetes and then pass them to your container when it runs. This makes your application cleaner, easier to manage, and more secure.
+
+We use ConfigMaps and Secrets mainly to avoid hardcoding values. For example, if you put a database password directly in your code, it is unsafe and difficult to change later. But if you store it in a Secret, you can update it anytime without changing the application. Similarly, ConfigMaps help you manage things like environment (dev, prod) without modifying your code. This separation is very important in real-world projects where the same application runs in different environments.
+
+There are three main ways to use (pass) ConfigMaps and Secrets to Pods. First, you can pass them as environment variables, where your application reads values like APP_ENV or DB_PASSWORD. Second, you can use envFrom, which loads all values at once as environment variables. Third, you can mount them as files inside the container, where each key becomes a file that your application reads. These methods allow your container to use external configuration dynamically.
+
+The advantages are that they make your system flexible, reusable, and easier to manage, and Secrets provide a basic level of security by separating sensitive data. However, there are some disadvantages: ConfigMaps are not secure because they store plain text data, and Secrets are only base64 encoded by default (not fully encrypted unless configured). Also, when you update them, sometimes you need to restart Pods to see the changes.
+
+In simple terms, ConfigMap is for normal settings, Secret is for sensitive data, and both are used to safely and cleanly provide configuration to your applications in Kubernetes.
